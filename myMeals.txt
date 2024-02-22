@@ -1,2 +1,3 @@
 Breakfast: Eggs
 Lunch: Burger and Fries
+Dinner: Steak
