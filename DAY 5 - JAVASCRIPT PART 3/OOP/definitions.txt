@@ -1,0 +1,4 @@
+// Polymorphism - 2 objects share the same method but perform the method differently
+// Abstraction - show the necessary thing without showing implementation details (e.g. car = with abstraction, car engine = without abstraction)
+
+
