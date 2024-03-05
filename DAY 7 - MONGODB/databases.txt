@@ -1,0 +1,10 @@
+NoSQL (more flexible than SQL/Relational DB)
+    - document DB, graph DB, etc.
+
+Document DB - JSON-like objects (key-value pair)
+
+MongoDB
+    - Collections       e.g. User Collection
+        - Documents     e.g. user 1
+            - Field     e.g. First Name
+            - Values    e.g. John

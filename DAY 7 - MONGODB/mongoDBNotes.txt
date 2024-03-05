@@ -1,0 +1,86 @@
+https://cloud.mongodb.com/
+
+1. Configure DB security
+Database Access - add user and set up user permissions to the DB
+    - for learning, username: kevin; pw: test123
+    - password - it will be published to Github
+
+Network Access - set up IP address that can access the DB
+
+2. create DB/Cluster
+    - Deployment > Database
+
+3. Open MongoDBCompass (used for CRUD operations in DB)
+4. Get the connection string from the cluster and paste it in MongoDBCompass to connect to the DB
+5. Once connected, create a DB
+
+--- Create/Insert document ---
+Add Data > Insert Document
+/** 
+* Paste one or more documents here
+*/
+{
+  "_id": {
+    "$oid": "65e6995d21f9aeb80946f22e"         // this is the ID of the document
+  },
+  "username": "john_doe",
+  "email": "john@example.com",
+  "age": 30,
+  "status": "active"
+}
+
+Read Data
+example query: {"status": "active"}
+
+Update Data
+example query:
+{
+  $set: {
+    "status": "active"
+  },
+}
+
+------ MongoSh -----
+- in Compass, open MongoSh in the bottom
+- common queries (operators begin with "$")
+    - show dbs      // show all DBs
+    - use [db_name] // switch to the DB
+
+    CREATE DOCUMENTS
+    - db.[collection_name].insertOne({"field": "value"});     // example: db.users.insertOne({"username": "ron_cabatuando", "email": "ron@example.com", "age": 20, "status": "active"});
+    - db.[collection_name].insertMany({"field": "value"}, {"field": "value"});    // insertMany() accepts an array of objects
+        - example: db.users.insertMany([{"username": "gary_walker", "email": "gary@example.com", "age": 25, "status": "active"}, {"username": "haiyan_zhu", "email": "haiyan@example.com", "age": 22, "status": "inactive"}]);
+
+    READ DOCUMENTS
+    - db.[collection_name].find();  // find all records or specific record
+        - example: db.users.find(); // all records
+        - example: db.users.find({"age": 30});  // specific record
+    - db.[collection_name].find().limit([number of records to return]); // find all records and limit the count of returns
+        - example: db.users.find().limit(2);    // limit to 2 records returned
+        - example: db.users.find({"status":"inactive"}).limit(2);   // limit to 2 records returned where "status" = "inactive"
+    - db.[collection_name].find.sort("field", 1);      // return in ascending order; -1 to return in descending order
+        - example: db.users.find().sort("username", 1);
+
+    UPDATE DOCUMENTS
+    - db.[collection_name].updateOne({"field": "value"}, {$set: {"field": "value"}});     // update the first instance of document based on condition
+        - example: db.users.updateOne({"username": "jane_smith"}, {$set: {"status": "active", "age": 26}});
+    - db.collectionName.updateMany({"field": "value"}, {$set: {"field": "value"}});   // update multiple documents
+
+    DELETE documents
+    - db.collectionName.deleteOne({ "field": "value" });    // deletes first instance of document
+    - db.collectionName.deleteMany({ "field": "value" });   // deletes all documents with the specified field and value
+    - db.collectionName.deleteMany({});                     // deletes all the documents inside a collection
+
+    COMPARSION Operators
+    - db.users.find({"field": {$eq: "criteria_value"}});  // equal to
+    - db.users.find({"field": {$ne: "criteria_value"}});  // not equal to
+    - db.users.find({"field": {$gt: "criteria_value"}});  // greater than
+    - db.users.find({"field": {$lt: "criteria_value"}});  // less than
+    - db.users.find({"field": {$gte: "criteria_value"}}); // greater than or equal to
+    - db.users.find({"field": {$lte: "criteria_value"}}); // less than or equal to
+
+    LOGICAL Operators
+    - db.users.find({$and: [{"field":"value"}, {"field":{$gte:"value"}}]});    // find based on multiple conditions
+        - example: db.users.find({$and: [{"status":"active"}, {"age":{$gte:20}}]});
+    - db.users.find({$or: [{"field":"value"}, {"field":{$gte:"value"}}]});    // find based on either condition
+
